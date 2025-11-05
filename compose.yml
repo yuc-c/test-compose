@@ -9,5 +9,25 @@ services:
         - war_file=labboot-back.war
     ports:
       - "9080:8080"
-    container_name: "proj-java"
+    container_name: "java"
 
+  frontend:
+    build:
+      context: ./front/
+      dockerfile: ./serve.dockerfile
+      args:
+        - publish_dir=dist
+    ports:
+      - "6173:6173"
+    container_name: "vue"
+
+  proxy:
+    build:
+      context: ./proxy/
+      dockerfile: ./nginx.dockerfile
+    ports:
+      - "80:80"
+    container_name: "proxy"
+    depends_on:
+      - backend
+      - frontend
