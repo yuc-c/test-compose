@@ -1,0 +1,13 @@
+name: "proj"
+
+services:
+  backend:
+    build:
+      context: ./back/
+      dockerfile: ./tomcat.dockerfile
+      args:
+        - war_file=labboot-back.war
+    ports:
+      - "9080:8080"
+    container_name: "proj-java"
+
